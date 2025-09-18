@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Time I've worked at UW-L</title>
+  <meta charset="UTF-8">
+  <title>Time Since April 8, 2024</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 28px;
+      color: #0078d4;
+    }
+  </style>
 </head>
 <body>
-  <h2>Time I've worked at UW-L:</h2>
-  <p id="timer" style="font-size: 24px;"></p>
+  <div class="container">
+    <h2>Time I've worked at UW-L:</h2>
+    <p id="timer"></p>
+  </div>
 
   <script>
     function updateTimer() {
-      const startTime = new Date("2024-04-08T14:00:00Z"); // 8 AM CT = 13:00 UTC
+      const startTime = new Date("2024-04-08T13:00:00Z"); // 8 AM CT = 13:00 UTC
       const now = new Date();
       let diff = Math.floor((now - startTime) / 1000);
 
       const years = Math.floor(diff / (365.25 * 24 * 3600));
-      diff %= Math.floor(365.25 * 24 * 3600);
-      const days = Math.floor(diff / (24 * 3600));
-      diff %= 24 * 3600;
-      const hours = Math.floor(diff / 3600);
-      diff %= 3600;
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff % 60;
-
-      document.getElementById("timer").textContent =
-        `${years} years, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 1000);
-  </script>
-</body>
-</html>

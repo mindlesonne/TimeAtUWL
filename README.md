@@ -5,7 +5,7 @@
   <title>Time Since April 8, 2024</title>
 </head>
 <body>
-  <h2>Time since 8:00 AM Central Time on April 8, 2024:</h2>
+  <h2>WRONG ONE:</h2>
   <p id="timer" style="font-size: 24px;"></p>
 
   <script>

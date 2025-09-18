@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Time Ryan Hamel has worked at UW-L</title>
+  <title>Ryan Hamel has worked at UW-L for</title>
   <style>
     html, body {
       height: 100%;
@@ -10,7 +10,6 @@
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
     }
-
     .container {
       display: flex;
       flex-direction: column;
@@ -19,18 +18,18 @@
       height: 100%;
       text-align: center;
     }
-
     h2 {
       color: #333;
       font-size: 24px;
       margin-bottom: 20px;
     }
-
     #timer {
       font-size: 28px;
       color: #0078d4;
     }
   </style>
+  <!-- Include Luxon from a CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -39,22 +38,36 @@
   </div>
 
   <script>
+    const { DateTime } = luxon;
+
     function updateTimer() {
-      const startTime = new Date("2024-04-08T14:00:00Z"); // 9 AM CT = 14:00 UTC
-      const now = new Date();
-      let diff = Math.floor((now - startTime) / 1000);
+      // Define the start in Central Time
+      const start = DateTime.fromObject(
+        { year: 2024, month: 4, day: 8, hour: 8, minute: 0, second: 0 },
+        { zone: 'America/Chicago' }
+      );
 
-      const years = Math.floor(diff / (365.25 * 24 * 3600));
-      diff %= Math.floor(365.25 * 24 * 3600);
-      const days = Math.floor(diff / (24 * 3600));
-      diff %= 24 * 3600;
-      const hours = Math.floor(diff / 3600);
-      diff %= 3600;
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff % 60;
+      // Get now in Central Time
+      const now = DateTime.now().setZone('America/Chicago');
 
-      document.getElementById("timer").textContent =
-        `${years} years, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+      // Compute the difference
+      const diff = now.diff(start, ['years', 'months', 'days', 'hours', 'minutes', 'seconds']).toObject();
+
+      // Format numbers
+      const years = Math.floor(diff.years);
+      const months = Math.floor(diff.months);
+      const days = Math.floor(diff.days);
+      const hours = Math.floor(diff.hours);
+      const minutes = Math.floor(diff.minutes);
+      const seconds = Math.floor(diff.seconds);
+
+      // Build a string
+      let out = '';
+      if (years > 0) out += `${years} years, `;
+      if (months > 0) out += `${months} months, `;
+      out += `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+
+      document.getElementById('timer').textContent = out;
     }
 
     updateTimer();
